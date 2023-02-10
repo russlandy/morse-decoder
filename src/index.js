@@ -39,6 +39,19 @@ const MORSE_TABLE = {
 
 function decode(expr) {
     // write your solution here
+    let arr = [];
+    for (let i = 0; i < expr.length; i += 10){
+        arr.push(expr.slice(i, i + 10)); //Разбивка на массивы по десять символов
+    }
+    let result = arr
+    .map(el => MORSE_TABLE[el //Замена кода по азбуке морзе на буквы
+    .slice(el.indexOf('1')) //убираем нули до единички
+    .match(/.{1,2}/g) //разбивка на массивы по два элемента
+    .map(el => el === '11' ? '-' : el === '10' ? '.' : null) //замена значений на тире и точку
+    .join('')
+    ]); //ключ для объекта
+    let word = result.map(el => el !== undefined ? el : ' ').join(''); //определяем undefined как ' ' и складываем строку
+    return word;
 }
 
 module.exports = {
